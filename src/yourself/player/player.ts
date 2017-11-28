@@ -1,11 +1,21 @@
+interface PlayerInfo {
+    id: number;
+    name: string;
+    visible?: boolean;
+}
+
 class Player {
-    private isShow: boolean = false;
+    private playerInfo: PlayerInfo;
 
-    constructor(playerID: number) {
-
+    constructor(playerInfo: PlayerInfo) {
+        this.playerInfo = playerInfo;
     }
 
-    Show() {
-        this.isShow = true;
+    SetVisible(isVisible: boolean): void {
+        this.playerInfo.visible = isVisible;
+    }
+
+    isVisible(): boolean {
+        return this.playerInfo.visible;
     }
 }

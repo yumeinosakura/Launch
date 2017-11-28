@@ -3,6 +3,7 @@ class GameMain{
     constructor()
     {
         new GameStart();
+        // new KeyEvent.KeyBoradInspector();
     }
 }
 new GameMain();

@@ -1,7 +1,7 @@
 // 程序入口
 var GameMain = /** @class */ (function () {
     function GameMain() {
-        new GameStart();
+        //new GameStart();
     }
     return GameMain;
 }());
