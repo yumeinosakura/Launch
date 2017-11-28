@@ -11,15 +11,20 @@ class Game {
     private gameInfo: GameInfo;
 
     constructor() {
-        this.gameInfo.GameState = GAME_STATE.TITLE;
+        this.gameInfo = {GameState: GAME_STATE.TITLE};
+    }
+
+    MainLoop(): void {
+        this.Main();
+        this.Draw();
     }
 
     Main(): void {
-
+        console.log("Main");
     }
 
     Draw(): void {
-
+        console.log("Draw");
     }
 
     UpdateGameState(): void {
