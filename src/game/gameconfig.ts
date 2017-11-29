@@ -18,6 +18,9 @@ module GameConfig {
 
             // 设置竖直对齐
             Laya.stage.alignV = "middle";
+
+            // 设置颜色
+            Laya.stage.bgColor = "#111111";
         }
     }
 }
