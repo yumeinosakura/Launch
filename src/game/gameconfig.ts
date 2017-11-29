@@ -22,5 +22,13 @@ module GameConfig {
             // 设置颜色
             Laya.stage.bgColor = "#111111";
         }
+
+        DebugEnableFPS(enable: boolean): void {
+            if (enable) {
+                Laya.Stat.show(0, 0)
+            } else {
+                Laya.Stat.hide()
+            }
+        }
     }
 }
