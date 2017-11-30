@@ -22,21 +22,21 @@ module GameConfig {
             // 设置颜色
             Laya.stage.bgColor = "#111111";
         }
+    }
 
-        DebugEnableFPS(enable: boolean): void {
-            if (enable) {
-                Laya.Stat.show(0, 0)
-            } else {
-                Laya.Stat.hide()
-            }
+    export function DebugEnableFPS(enable: boolean): void {
+        if (enable) {
+            Laya.Stat.show()
+        } else {
+            Laya.Stat.hide()
         }
     }
 
-    function GetStageWith(): number {
+    export function GetStageWidth(): number {
         return Laya.stage.width;
     }
 
-    function GetStageHeight(): number {
+    export function GetStageHeight(): number {
         return Laya.stage.height;
     }
 }
