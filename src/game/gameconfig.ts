@@ -31,4 +31,12 @@ module GameConfig {
             }
         }
     }
+
+    function GetStageWith(): number {
+        return Laya.stage.width;
+    }
+
+    function GetStageHeight(): number {
+        return Laya.stage.height;
+    }
 }
