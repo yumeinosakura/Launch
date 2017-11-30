@@ -17,6 +17,9 @@ interface GameInfo {
     // Loading
     Loading: Laya.ProgressBar;
     LoadingIsCall: boolean;
+
+    // Title
+    Play: Laya.Button;
 }
     
 class Game {
@@ -27,20 +30,16 @@ class Game {
             GameState: GAME_STATE.LOADING
             , SubGameState: SUB_GAME_STATE.ENTER
             , Loading: null
-            , LoadingIsCall: false};
+            , LoadingIsCall: false
+            , Play: null};
     }
 
     MainLoop(): void {
         this.Main();
-        this.Draw();
     }
 
     Main(): void {
         this.UpdateGameState();
-    }
-
-    Draw(): void {
-        console.log("Draw");
     }
 
     private UpdateGameState(): void {
@@ -132,12 +131,13 @@ class Game {
     }
 
     private UpdateTitleEnter(): void {
-        let button = new Laya.Button("res/ui/title/play.png");
-        button.pos(160 - 16, 360);
-        button.width = 32;
-        button.height = 32;
+        this.gameInfo.Play = new Laya.Button("res/ui/title/play.png");
+        this.gameInfo.Play.pos(270 - 16, 700);
+        this.gameInfo.Play.width = 32;
+        this.gameInfo.Play.height = 32;
+        this.gameInfo.Play.clickHandler = Laya.Handler.create(this, this.OnPlayClicked);
 
-        Laya.stage.addChild(button);
+        Laya.stage.addChild(this.gameInfo.Play);
 
         this.gameInfo.SubGameState = SUB_GAME_STATE.RUN;
     }
@@ -146,7 +146,14 @@ class Game {
     }
 
     private UpdateTitleExit(): void {
+        this.gameInfo.GameState = GAME_STATE.GAMEING;
+        this.gameInfo.SubGameState = SUB_GAME_STATE.ENTER;
+        this.gameInfo.Play.destroy();
+        this.gameInfo.Play = null;
+    }
 
+    private OnPlayClicked(): void {
+        this.gameInfo.SubGameState = SUB_GAME_STATE.EXIT;
     }
 
     private UpdateGameing(): void {
