@@ -132,7 +132,7 @@ class Game {
 
     private UpdateTitleEnter(): void {
         this.gameInfo.Play = new Laya.Button("res/ui/title/play.png");
-        this.gameInfo.Play.pos(270 - 16, 700);
+        this.gameInfo.Play.pos(GameConfig.GetStageWidth() / 2.0 - 16, 700);
         this.gameInfo.Play.width = 32;
         this.gameInfo.Play.height = 32;
         this.gameInfo.Play.clickHandler = Laya.Handler.create(this, this.OnPlayClicked);
