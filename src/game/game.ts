@@ -20,6 +20,9 @@ interface GameInfo {
 
     // Title
     Play: Laya.Button;
+
+    // Stage
+    Stage: StageAir.Air;
 }
     
 class Game {
@@ -31,7 +34,8 @@ class Game {
             , SubGameState: SUB_GAME_STATE.ENTER
             , Loading: null
             , LoadingIsCall: false
-            , Play: null};
+            , Play: null
+            , Stage: null};
     }
 
     MainLoop(): void {
@@ -84,7 +88,7 @@ class Game {
             let image = [
                 "res/ui/title/play.png"
             ];
-            Laya.loader.load(image, Laya.Handler.create(this, this.OnAllAssertLoaded), Laya.Handler.create(this, this.OnLoadingAllAssert));
+            Laya.loader.load(image, null, Laya.Handler.create(this, this.OnLoadingAllAssert));
             this.gameInfo.LoadingIsCall = true;
         }
     }
@@ -106,12 +110,11 @@ class Game {
         Laya.stage.addChild(this.gameInfo.Loading);
     }
 
-    private OnAllAssertLoaded(): void {
-        this.gameInfo.SubGameState = SUB_GAME_STATE.EXIT;
-    }
-
     private OnLoadingAllAssert(prograss: number): void {
         this.gameInfo.Loading.value = prograss;
+        if (prograss >= 1.0) {
+            this.gameInfo.SubGameState = SUB_GAME_STATE.EXIT;
+        }
     }
 
     private UpdateTitle(): void {
@@ -157,6 +160,10 @@ class Game {
     }
 
     private UpdateGameing(): void {
-
+        if (this.gameInfo.Stage == null) {
+            this.gameInfo.Stage = new StageAir.Air();
+        }
+        this.gameInfo.Stage.Main();
+        this.gameInfo.Stage.Draw();
     }
 }
