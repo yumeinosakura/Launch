@@ -1,7 +1,7 @@
 module util {
     // 默认hash函数
     export function DefaultHashMethod<T>(hash: number, map: Map<T>): number {
-        let size = map.length();
+        let size = map.capacity();
         return hash % size;
     }
 
@@ -55,8 +55,53 @@ module util {
             return undefined;
         }
 
-        length(): number {
+        capacity(): number {
             return this._container.length;
         }
+
+        [Symbol.iterator]() {
+            const self = this;
+            let id: number = 0;
+            let it = null;
+            let find: boolean = false;
+
+            for (; id < self._container.length; id = id + 1) {
+                if (self._container[id] != null) {
+                    it = self._container[id][Symbol.iterator]();
+                    find = true;
+                    break;
+                }
+            }
+
+            if (find) {
+                return {
+                    next() {
+                        let node = it.next();
+                        if (node.done) {
+                            find = false;
+                            for (id = id + 1; id < self._container.length; id = id + 1) {
+                                if (self._container[id] != null) {
+                                    it = self._container[id][Symbol.iterator]();
+                                    find = true;
+                                    break;
+                                }
+                            }
+
+                            if (!find) {
+                                return {done: true, value: undefined};
+                            }
+                        } else {
+                            return {done: false, value: node.value};
+                        }
+                    }
+                };
+            } else {
+                return {
+                    next() {
+                        return {done: true, value: undefined};
+                    }
+                };
+            }
+        }        
     };
 };

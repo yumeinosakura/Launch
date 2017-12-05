@@ -5,15 +5,15 @@ module StageAir {
 
     export class Air {
         constructor() {
-
+            enemy.EnemyE01.Create(200, 0);
         }
 
         Main() {
-            console.log("Stage-Air-Main");
+            enemy.Main();
         }
 
         Draw() {
-            console.log("Stage-Air-Draw");
+            enemy.Draw();
         }
     }
 }

@@ -86,9 +86,10 @@ class Game {
     private UpdateLoadingRun(): void {
         if (this.gameInfo.LoadingIsCall == false) {
             let image = [
-                "res/ui/title/play.png"
+                "res/ui/title/play.png",
+                "res/actor/enemy/e01.png"
             ];
-            Laya.loader.load(image, null, Laya.Handler.create(this, this.OnLoadingAllAssert));
+            Laya.loader.load(image, Laya.Handler.create(this, this.OnLoadingAllAssert), Laya.Handler.create(this, this.OnLoadingAllAssert));
             this.gameInfo.LoadingIsCall = true;
         }
     }
