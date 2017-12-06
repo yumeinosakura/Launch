@@ -1,7 +1,12 @@
 module Events {
-    export class KeyBoradInspector {
-        private keyCode: number;
+    export interface KeyInfo {
+        keyCode: number;
+        isDown: boolean;
+        isUp: boolean;
+        isPress: boolean;
+    }
 
+    export abstract class KeyBoradInspector {
         constructor() {
         }
 
@@ -11,23 +16,8 @@ module Events {
             Laya.stage.on(Laya.Event.KEY_PRESS, this, this.OnKeyPress);
         }
 
-        private OnKeyDown(e: Laya.Event): void {
-            console.log(e["keyCode"]);
-            this.keyCode = e["keyCode"];
-        }
-
-        private OnKeyUp(e: Laya.Event): void {
-            console.log(e["keyCode"]);
-            this.keyCode = e["keyCode"];
-        }
-
-        private OnKeyPress(e: Laya.Event): void {
-            console.log(e["keyCode"]);
-            this.keyCode = e["keyCode"];
-        }
-
-        GetKeyDownCode(): number {
-            return this.keyCode;
-        }
+        abstract OnKeyDown(e: Laya.Event): any;
+        abstract OnKeyUp(e: Laya.Event): any;
+        abstract OnKeyPress(e: Laya.Event): any;
     }
 }

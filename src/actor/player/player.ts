@@ -1,20 +1,16 @@
 module Actor {
-    export class Player implements ActorBase {
+    export class Player extends ActorBase {
         private playerSprite: Laya.Sprite;
-        private playerInfo: ActorInfo;
+        private gamePlay: Events.GamePlay;
 
-        constructor(playerInfo: ActorInfo) {
-            this.playerInfo = playerInfo;
+        constructor(actorInfo: ActorInfo) {
+            super(actorInfo);
             this.Init();
-        }
-
-        private InitPlayer(): void {
-            this.playerSprite = new Laya.Sprite();
-            this.playerSprite.loadImage("res/actor/player/player.png");
         }
 
         Init(): void {
             this.InitPlayer();
+            this.InitGamePlay();
         }
 
         Main(): void {
@@ -22,31 +18,17 @@ module Actor {
         }
 
         Draw(): void {
-            this.playerSprite.visible = this.playerInfo.visible;
+            this.playerSprite.visible = this.actorInfo.visible;
         }
 
-        SetX(x: number): void {
-            this.playerInfo.x = x;
+        private InitPlayer(): void {
+            this.playerSprite = new Laya.Sprite();
+            this.playerSprite.loadImage("res/actor/player/player.png");
+            Laya.stage.addChild(this.playerSprite);
         }
 
-        GetX(): number {
-            return this.playerInfo.x;
-        }
-
-        SetY(y: number): void {
-            this.playerInfo.y = y;
-        }
-
-        GetY(): number {
-            return this.playerInfo.y;
-        }
-
-        SetVisible(visible: boolean): void {
-            this.playerInfo.visible = visible;
-        }
-
-        isVisible(): boolean {
-            return this.playerInfo.visible;
+        private InitGamePlay(): void {
+            this.gamePlay = new Events.GamePlay();
         }
 
         GetPlayer(): Laya.Sprite {
@@ -54,30 +36,27 @@ module Actor {
         }
 
         private UpdatePlayerPos(): void {
-            this.playerSprite.x = this.playerInfo.x;
-            this.playerSprite.y = this.playerInfo.y;
+            this.HandleGamePlay();
+            this.playerSprite.x = this.actorInfo.pos.x;
+            this.playerSprite.y = this.actorInfo.pos.y;
         }
-    }
-}
-    
-    interface PlayerInfo {
-    id: number;
-    name: string;
-    visible?: boolean;
-}
 
-class Player {
-    private playerInfo: PlayerInfo;
+        private HandleGamePlay(): void {
+            if (this.gamePlay.GetGamePlayInfo().KEY_LEFT.isDown) {
+                this.actorInfo.pos.x -= 1;
+            }
 
-    constructor(playerInfo: PlayerInfo) {
-        this.playerInfo = playerInfo;
-    }
+            if (this.gamePlay.GetGamePlayInfo().KEY_UP.isDown) {
+                this.actorInfo.pos.y -= 1;
+            }
 
-    SetVisible(isVisible: boolean): void {
-        this.playerInfo.visible = isVisible;
-    }
+            if (this.gamePlay.GetGamePlayInfo().KEY_RIGHT.isDown) {
+                this.actorInfo.pos.x += 1;
+            }
 
-    isVisible(): boolean {
-        return this.playerInfo.visible;
+            if (this.gamePlay.GetGamePlayInfo().KEY_DOWN.isDown) {
+                this.actorInfo.pos.y += 1;
+            }
+        }
     }
 }

@@ -1,23 +1,35 @@
 module Actor {
     export interface ActorInfo {
-        x: number;
-        y: number;
+        pos: util.Point;
         id: number;
         visible: boolean;
     }
 
-    export interface ActorBase {
-        Init(): void;
-        Main(): void;
-        Draw(): void;
+    export abstract class ActorBase implements Base.BaseLogic {
+        protected actorInfo: ActorInfo;
+        
+        constructor(actorInfo: ActorInfo) {
+            this.actorInfo = actorInfo;
+        }
 
-        SetX(x: number): void;
-        GetX(): number;
+        abstract Init(): void;
+        abstract Main(): void;
+        abstract Draw(): void;
 
-        SetY(y: number): void;
-        GetY(): number;
+        get pos(): util.Point {
+            return this.actorInfo.pos;
+        }
 
-        SetVisible(visible: boolean): void;
-        isVisible(): boolean;
+        set pos(pos: util.Point) {
+            this.actorInfo.pos = pos;
+        }
+
+        get visible(): boolean {
+            return this.actorInfo.visible;
+        }
+
+        set visible(visible: boolean) {
+            this.actorInfo.visible = visible;
+        }
     }
 }
