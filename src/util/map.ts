@@ -59,6 +59,24 @@ module util {
             return this._container.length;
         }
 
+        remove(key: number) {
+            let hashKey = this._hashMethod(key, this);
+            let container: List<Node<T>> = this._container[hashKey];
+
+            let deadNode: Node<T> = null;
+            for (let node of container) {
+                if (node.key == key) {
+                    deadNode = node;
+                    break;
+                }
+            }
+
+            container.remove(deadNode);
+            if (container.empty()) {
+                this._container[hashKey] = null;
+            }
+        }
+
         [Symbol.iterator]() {
             const self = this;
             let id: number = 0;

@@ -12,6 +12,17 @@ module enemy {
         }
 
         // TODO: 移除死亡的敌人
+        let deadEnemyId: number[] = []
+        for (let enemy of EnemyList) {
+            if (!enemy.value.alive) {
+                deadEnemyId.push(enemy.value.id);
+            }
+        }
+
+        for (let id of deadEnemyId) {
+            EnemyList.find(id).Destroy();
+            EnemyList.remove(id);
+        }
     }
 
     export function Draw(): void {

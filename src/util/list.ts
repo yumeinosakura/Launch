@@ -35,6 +35,35 @@ module util {
             }
         }
 
+        remove(value: T): void {
+            let node: Node<T> = this._root;
+            for (; node != null; node = node.next) {
+                if (node.value == value) {
+                    node.value = null;
+                    if (node.prev == null && node.next != null) {
+                        node.next.prev = null;
+                    } else if (node.prev != null && node.next == null) {
+                        node.prev.next = null;
+                    } else if (node.prev != null && node.next != null) {
+                        node.prev.next = node.next;
+                    }
+                    break;
+                }
+            }
+
+            if (this._root.next == null || this._tail.prev == null) {
+                this._root = this._tail = null;
+            }
+        }
+
+        empty(): boolean {
+            if (this._root == null || this._tail == null) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         [Symbol.iterator]() {
             const self = this;
             let node = self._root;
