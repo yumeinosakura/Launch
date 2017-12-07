@@ -21,6 +21,10 @@ module Actor {
             this.playerSprite.visible = this.actorInfo.visible;
         }
 
+        Destroy(): void {
+            // TODO: 销毁玩家
+        }
+
         private InitPlayer(): void {
             this.playerSprite = new Laya.Sprite();
             this.playerSprite.loadImage("res/actor/player/player.png");

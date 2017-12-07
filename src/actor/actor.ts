@@ -15,6 +15,7 @@ module Actor {
         abstract Init(): void;
         abstract Main(): void;
         abstract Draw(): void;
+        abstract Destroy(): void;
 
         get pos(): util.Point {
             return this.actorInfo.pos;
@@ -30,6 +31,14 @@ module Actor {
 
         set visible(visible: boolean) {
             this.actorInfo.visible = visible;
+        }
+
+        get id(): number {
+            return this.actorInfo.id;
+        }
+
+        set id(id: number) {
+            this.actorInfo.id = id;
         }
     }
 }
