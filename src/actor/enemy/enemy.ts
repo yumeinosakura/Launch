@@ -29,47 +29,7 @@ module enemy {
         return id;
     }
 
-    abstract class Enemy {
-        private _Id: number;
-        private _X: number;
-        private _Y: number;
-        private _IsDead: boolean;
-
-        set Id(id: number) {
-            this._Id = id;
-        }
-
-        get Id(): number {
-            return this._Id;
-        }
-
-        set X(x: number) {
-            this._X = x;
-        }
-
-        get X(): number {
-            return this._X;
-        }
-
-        set Y(y: number) {
-            this._Y = y;
-        }
-
-        get Y(): number {
-            return this._Y;
-        }
-
-        set IsDead(isDead: boolean) {
-            this._IsDead = isDead;
-        }
-
-        get IsDead(): boolean {
-            return this._IsDead;
-        }
-
-        abstract Main(): void;
-        abstract Draw(): void;
-        abstract Destroy(): void;
+    abstract class Enemy extends Actor.ActorBase {
     };
 
     export class EnemyE01 extends Enemy {
@@ -77,16 +37,15 @@ module enemy {
 
         static Create(x: number, y: number): number {
             let e01: EnemyE01 = new EnemyE01();
-            e01.X = x;
-            e01.Y = y;
-            e01.Id = GenID();
-            EnemyList.insert(e01.Id, e01);
+            e01.pos = {x: x, y: y};
+            e01.id = GenID();
+            EnemyList.insert(e01.id, e01);
 
-            return e01.Id;
+            return e01.id;
         }
 
         constructor() {
-            super();
+            super({pos: {x: 0, y: 0}, id: -1, visible: true, alive: true})
             this.Sprite = new Laya.Sprite();
 
             let tex: Laya.Texture = Laya.loader.getRes("res/actor/enemy/e01.png");
@@ -95,16 +54,20 @@ module enemy {
             Laya.stage.addChild(this.Sprite);
         }
 
-        Main(): void {
-            this.Y = this.Y + 2.0;
+        Init(): void {
 
-            if (this.Y > GameConfig.GetStageHeight() + this.Sprite.getBounds().height) {
-                this.IsDead = true;
+        }
+
+        Main(): void {
+            this.pos.y = this.pos.y + 2.0;
+
+            if (this.pos.y > GameConfig.GetStageHeight() + this.Sprite.getBounds().height) {
+                this.alive = false;
             }
         }
 
         Draw(): void {
-            this.Sprite.pos(this.X, this.Y);
+            this.Sprite.pos(this.pos.x, this.pos.y);
         }
 
         Destroy(): void {

@@ -3,6 +3,7 @@ module Actor {
         pos: util.Point;
         id: number;
         visible: boolean;
+        alive: boolean;
     }
 
     export abstract class ActorBase implements Base.BaseLogic {
@@ -39,6 +40,14 @@ module Actor {
 
         set id(id: number) {
             this.actorInfo.id = id;
+        }
+
+        get alive(): boolean {
+            return this.actorInfo.alive;
+        }
+
+        set alive(alive: boolean) {
+            this.actorInfo.alive = alive;
         }
     }
 }
