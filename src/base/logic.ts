@@ -3,5 +3,6 @@ module Base {
         Init(): void;
         Main(): void;
         Draw(): void;
+        Destroy(): void;
     }
 }
