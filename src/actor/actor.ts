@@ -1,6 +1,7 @@
 module Actor {
     export interface ActorInfo {
         pos: util.Point;
+        rotate: number;
         id: number;
         visible: boolean;
         alive: boolean;
@@ -24,6 +25,14 @@ module Actor {
 
         set pos(pos: util.Point) {
             this.actorInfo.pos = pos;
+        }
+
+        get rotate(): number {
+            return this.actorInfo.rotate;
+        }
+
+        set rotate(rot: number) {
+            this.actorInfo.rotate = rot;
         }
 
         get visible(): boolean {

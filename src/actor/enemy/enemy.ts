@@ -56,7 +56,7 @@ module enemy {
         }
 
         constructor() {
-            super({pos: {x: 0, y: 0}, id: -1, visible: true, alive: true})
+            super({pos: {x: 0, y: 0}, rotate: 0, id: -1, visible: true, alive: true})
             this.Sprite = new Laya.Sprite();
 
             let tex: Laya.Texture = Laya.loader.getRes("res/actor/enemy/e01.png");
@@ -82,6 +82,62 @@ module enemy {
         }
 
         Destroy(): void {
+            this.Sprite.removeSelf();
+            this.Sprite.destroy();
+            this.Sprite = null;
+        }
+    };
+
+    export class EnemyE02 extends Enemy {
+        private Sprite: Laya.Sprite;
+        private Vel: util.Point;
+        private Rot: number;
+
+        static Create(): number {
+            let e02: EnemyE02 = new EnemyE02();
+            e02.id = GenID();
+            EnemyList.insert(e02.id, e02);
+
+            return e02.id;
+        }
+
+        constructor() {
+            super({pos: {x: GameConfig.GetStageWidth() / 2.0, y: 0}, rotate: 0.0, id: -1, visible: true, alive: true})
+            this.Vel = {x: 6.0, y: 3.0};
+            this.Rot = 15.0;
+
+            this.Sprite = new Laya.Sprite();
+
+            let tex: Laya.Texture = Laya.loader.getRes("res/actor/enemy/e01.png");
+            this.Sprite.graphics.drawTexture(tex);
+
+            this.Sprite.pivot(this.Sprite.getBounds().width/2, this.Sprite.getBounds().height/2);
+
+            Laya.stage.addChild(this.Sprite);
+        }
+
+        Init() {}
+
+        Main() {
+            this.actorInfo.rotate += this.Rot;
+            this.actorInfo.pos.x += this.Vel.x;
+            this.actorInfo.pos.y += this.Vel.y;
+            if (this.actorInfo.pos.x > GameConfig.GetStageWidth() || this.actorInfo.pos.x < 0.0) {
+                this.Vel.x = -this.Vel.x;
+                this.Rot = -this.Rot;
+            }
+
+            if (this.actorInfo.pos.y > GameConfig.GetStageHeight() + this.Sprite.getBounds().height) {
+                this.actorInfo.alive = false;
+            }
+        }
+
+        Draw() {
+            this.Sprite.pos(this.actorInfo.pos.x, this.actorInfo.pos.y);
+            this.Sprite.rotation = this.actorInfo.rotate;
+        }
+
+        Destroy() {
             this.Sprite.removeSelf();
             this.Sprite.destroy();
             this.Sprite = null;

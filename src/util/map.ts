@@ -107,6 +107,8 @@ module util {
 
                             if (!find) {
                                 return {done: true, value: undefined};
+                            } else {
+                                return it.next();
                             }
                         } else {
                             return {done: false, value: node.value};
