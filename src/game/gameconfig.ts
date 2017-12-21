@@ -1,4 +1,6 @@
 module GameConfig {
+    export let GAMESPEED: number = 10;
+
     export class ApplicationConfig {
         private DEFAULT_SCREEN_WIDTH: number = 540;
         private DEFAULT_SCREEN_HEIGHT: number = 960;
@@ -22,6 +24,10 @@ module GameConfig {
             // 设置颜色
             Laya.stage.bgColor = "#111111";
         }
+    }
+
+    export function GameSetting(): void {
+        new ApplicationConfig();
     }
 
     export function DebugEnableFPS(enable: boolean): void {

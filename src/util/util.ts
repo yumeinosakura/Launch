@@ -9,4 +9,9 @@ module util {
         y: number;
         z: number;
     }
+
+    export interface Rotate {
+        x: number;
+        y: number;
+    }
 }

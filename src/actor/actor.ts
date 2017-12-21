@@ -8,10 +8,7 @@ module Actor {
     }
 
     export abstract class ActorBase implements Base.BaseLogic {
-        protected actorInfo: ActorInfo;
-        
-        constructor(actorInfo: ActorInfo) {
-            this.actorInfo = actorInfo;
+        constructor(protected actorInfo: ActorInfo) {
         }
 
         abstract Init(): void;
