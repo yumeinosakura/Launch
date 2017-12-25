@@ -20,7 +20,6 @@ module GameMgr {
             if (this.stage) {
                 this.stage.Main();
                 this.UpdateState();
-                console.log(this.stage.stagetype);
             }
         }
 
