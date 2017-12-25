@@ -7,9 +7,7 @@ module Bullet {
     }
 
     export abstract class BulletBase implements Base.BaseLogic {
-        constructor(protected bulletInfo: BulletInfo) {
-        }
-
+        constructor() {}
         abstract Init(): void;
         abstract Main(): void;
         abstract Draw(): void;
